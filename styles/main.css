@@ -1,3 +1,6 @@
-*{
-    background-color: rgb(192, 155, 155);
-}
+
+
+.dark-background{
+    background-color: #2b362e;
+    color: #fafcfb;
+  }
