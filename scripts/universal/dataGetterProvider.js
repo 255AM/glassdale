@@ -15,7 +15,6 @@ export const fetcherFunction = (page) => {
         parsedData => {
             console.table(parsedData)
             dataArr = parsedData
-            
         }
     )
 }
