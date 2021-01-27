@@ -1,4 +1,4 @@
-//create and export a string representation of a criminal object
+//create and export a string representation of a criminal object. Criminal is parameter that will be fed when fx is called
 
 export const criminalHtmlObject = (criminal) => {
     return `
