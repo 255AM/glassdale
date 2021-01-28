@@ -1,5 +1,6 @@
 import { fetcherFunction, copyOfDataFunction } from './dataGetterProvider.js'
 import { htmlObject } from './htmlObject.js'
+import { dropDownCreator } from './dropDownCreator.js'
 
 const element1 = document.querySelector("#criminals-nav-link")
 const element2 = document.querySelector("#officers-nav-link")
@@ -12,38 +13,52 @@ document.addEventListener('click', event => {
     return;
     }else if(event.target === element1){
         writer('criminal', 'criminals', 'conviction')
+        //create dropdown box only on criminal page
+        dropDownCreator('convictions')
+        dropDownCreator('officers')
     }else if(event.target === element2){
         writer('officer','officers')
-        
+        //clear dropdownbox on pages != criminals
+        document.querySelector(".convictions-dropdown").innerHTML = ''
     }else if(event.target === element3){
-        //console.log(3);
-        writer('facilities','facilities')
         
+        writer('facilities','facilities')
+        document.querySelector(".convictions-dropdown").innerHTML = ''
     }
 })
 
-//creating and exporting new all inclusive fx to run process
 //parameters: category(criminal||officer||facilities. Determined by which link is clicked)
 //            page(criminals||officers||facilities. Determined by which linl is clicked)
-//            conviction(ONLY needed for criminals. Used in sorting of criminals by conviction. Defined in crimeSelect.js, by the dropdown list change handler)
-export const writer = (category,page,conviction) => {
+//            conviction(Used in sorting of criminals by conviction. Defined in dropDownCreator.js by the dropdown list change handler)
+export const writer = (category,page,conviction,officer) => {
     targetElement.innerHTML = ""
     
-    //attempt to create a default conviction value at page load in order to print all convictions initially
-         //conviction = (typeof conviction !== 'undefined') ?  conviction : 0
+    
     //call fx to return data from api
-    fetcherFunction(page)
+    fetcherFunction(page)//(page) defined at dropdownCreator.js
     //instruct program to wait until dat is returned
     .then(() => {
         let concatonatedStringObjects = ''
         //create copy of returned data
         const dataArr = copyOfDataFunction()
-        dataArr.forEach(current => {
+        let criminalsWithSelectedConviction = []
+        if (conviction != 0){
+            criminalsWithSelectedConviction = dataArr.filter(c =>{
+                 return c.conviction == conviction
+            })
+            if (officer != 0){
+                criminalsWithSelectedConviction = criminalsWithSelectedConviction.filter(c =>{
+                    return c.arrestingOfficer == officer
+                })
+            }    
+        }
+        criminalsWithSelectedConviction.forEach(current => {
             concatonatedStringObjects+= htmlObject(current,category, conviction)
         });
+        
         document.querySelector('#targetHeading').innerHTML = category;
-        targetElement.innerHTML += concatonatedStringObjects;
-        console.log(concatonatedStringObjects)
+        targetElement.innerHTML = concatonatedStringObjects;
+        
     })
 }
 
