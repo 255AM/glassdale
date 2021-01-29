@@ -21,11 +21,13 @@ document.addEventListener('click', event => {
         //clear dropdownbox on pages != criminals
         document.querySelector(".convictions-dropdown").innerHTML = ''
     }else if(event.target === element3){
-        
         writer('facilities','facilities')
         document.querySelector(".convictions-dropdown").innerHTML = ''
     }
 })
+
+
+
 
 //parameters: category(criminal||officer||facilities. Determined by which link is clicked)
 //            page(criminals||officers||facilities. Determined by which linl is clicked)
@@ -52,7 +54,7 @@ export const writer = (category,page,conviction,officer) => {
                 })
             }    
         }
-        criminalsWithSelectedConviction.forEach(current => {
+        dataArr.forEach(current => {
             concatonatedStringObjects+= htmlObject(current,category, conviction)
         });
         
