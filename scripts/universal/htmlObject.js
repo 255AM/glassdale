@@ -16,7 +16,7 @@ export const htmlObject = (current,category) => {
             <li> Conviction: ${current.conviction}</li>
             <div class='associates-button'>
             ${/* creating a button that returns id of criminal when clicked, then creating div to target when associate lines are printed*/''}
-            <button id="associate-id${current.id}">Known Associates</button>
+            <button id="associate-id:${current.id}">Known Associates</button>
             </div>
             <div class='ka${current.id}'></div>
         </ul>
